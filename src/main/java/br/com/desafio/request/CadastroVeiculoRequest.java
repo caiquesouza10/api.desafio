@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import javax.validation.constraints.NotBlank;
 
-import br.com.desafio.model.CadastroUsuario;
-import br.com.desafio.model.CadastroVeiculo;
+import br.com.desafio.model.Usuario;
+import br.com.desafio.model.Veiculo;
 import br.com.desafio.repository.CadastroUsuarioRepository;
 
 public class CadastroVeiculoRequest {
@@ -51,9 +51,9 @@ public class CadastroVeiculoRequest {
 		return "CadastroVeiculoRequest [marca=" + marca + ", modelo=" + modelo + ", ano=" + ano + "]";
 	}
 
-	public CadastroVeiculo toModel(CadastroUsuarioRepository usuarioRepository) {
-		Optional<CadastroUsuario> cadastroUsuario = usuarioRepository.findById(usuario);
-		return new CadastroVeiculo(marca, modelo, ano, cadastroUsuario.get());
+	public Veiculo toModel(CadastroUsuarioRepository usuarioRepository) {
+		Optional<Usuario> cadastroUsuario = usuarioRepository.findById(usuario);
+		return new Veiculo(marca, modelo, ano, cadastroUsuario.get());
 	}
 
 }

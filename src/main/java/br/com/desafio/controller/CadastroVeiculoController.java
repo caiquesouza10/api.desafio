@@ -1,7 +1,6 @@
 package br.com.desafio.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -14,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.desafio.model.CadastroUsuario;
-import br.com.desafio.model.CadastroVeiculo;
+import br.com.desafio.model.Veiculo;
 import br.com.desafio.repository.CadastroUsuarioRepository;
 import br.com.desafio.repository.VeiculoRepository;
 import br.com.desafio.request.CadastroVeiculoRequest;
@@ -32,30 +30,18 @@ public class CadastroVeiculoController {
 
 	@PostMapping
 	public ResponseEntity<?> cadastrar(@RequestBody @Valid CadastroVeiculoRequest request) {
-		
-		Optional<CadastroUsuario> usuario = usuarioRepository.findById(request.getUsuario());
-		if(usuario.isPresent()) {
-		CadastroVeiculo veiculo = request.toModel(usuarioRepository);
+		Veiculo veiculo = request.toModel(usuarioRepository);
+		int dia = Integer.parseInt(request.getAno().substring(3));
+		veiculo.setRodizio(veiculo.adicionaDiaRodizio(dia));
 		repository.save(veiculo);
-
-		return ResponseEntity.ok().build();
-		}
-		
-		return ResponseEntity.badRequest().build();
+		return ResponseEntity.status(201).body(veiculo.toString());
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<?> listar(@PathVariable Long id) {
-		Optional<CadastroUsuario> usuario = usuarioRepository.findById(id);
-
-		if (usuario.isPresent()) {
-			Optional<CadastroVeiculo> veiculo = repository.findById(id);
-
-			return ResponseEntity.ok(veiculo);
-		}
-
-		return ResponseEntity.badRequest().build();
-
+	public List<Veiculo> listar(@PathVariable Long id) {
+		List<Veiculo> veiculo = repository.findBuscarVeiculos(id);
+		Veiculo.verificaRodizioAtivo(veiculo);
+		return veiculo;
 	}
 
 }

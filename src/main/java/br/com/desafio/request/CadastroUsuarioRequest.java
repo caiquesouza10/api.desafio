@@ -2,9 +2,11 @@ package br.com.desafio.request;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+
+import br.com.desafio.utils.CampoUnico;
 import org.hibernate.validator.constraints.br.CPF;
 
-import br.com.desafio.model.CadastroUsuario;
+import br.com.desafio.model.Usuario;
 
 public class CadastroUsuarioRequest {
 	
@@ -12,9 +14,11 @@ public class CadastroUsuarioRequest {
 	private String nome;
 	
 	@Email
+	@CampoUnico(klazz = Usuario.class, name = "email")
 	private String email;
 	
 	@CPF
+	@CampoUnico(klazz = Usuario.class, name = "cpf")
 	private String cpf;
 	
 	private String dataNascimento;
@@ -34,10 +38,10 @@ public class CadastroUsuarioRequest {
 				+ dataNascimento + "]";
 	}
 
-	public CadastroUsuario toModel() {
+	public Usuario toModel() {
 		// TODO Auto-generated method stub
 		
-		return new CadastroUsuario(nome, email, cpf, dataNascimento);
+		return new Usuario(nome, email, cpf, dataNascimento);
 	}
 	
 	

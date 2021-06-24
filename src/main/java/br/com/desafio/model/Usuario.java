@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-public class CadastroUsuario {
+public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,12 +22,12 @@ public class CadastroUsuario {
 	private String dataNascimento;
 
 	@Deprecated
-	public CadastroUsuario() {
+	public Usuario() {
 
 	}
 
-	public CadastroUsuario(@NotBlank String nome, @NotBlank String email, @NotBlank String cpf,
-			@NotBlank String dataNascimento) {
+	public Usuario(@NotBlank String nome, @NotBlank String email, @NotBlank String cpf,
+				   @NotBlank String dataNascimento) {
 
 		this.nome = nome;
 		this.email = email;
@@ -35,4 +35,16 @@ public class CadastroUsuario {
 		this.dataNascimento = dataNascimento;
 	}
 
+	public String getNome() {
+		return nome;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario{" +
+				"id=" + id +
+				", nome='" + nome + '\'' +
+				", email='" + email + '\'' +
+				'}';
+	}
 }
